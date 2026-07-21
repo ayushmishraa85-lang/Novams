@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Novams</title>
+<link rel="stylesheet" href="/css/style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ===== AUTH SCREENS ===== -->
+<div id="auth-screen" class="auth-wrapper hidden">
+  <div class="auth-card">
+    <div id="login-form">
+      <h1>Welcome back</h1>
+      <p class="muted">Enter your credentials to access your Novams dashboard</p>
+      <div id="login-error" class="form-error hidden"></div>
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="name@company.com" />
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="••••••••" />
+      <div class="login-options">
+        <label class="checkbox-label"><input type="checkbox" id="login-remember" /> Remember me</label>
+        <a href="#" id="show-forgot">Forgot password?</a>
+      </div>
+      <button class="btn-primary" id="login-btn">Sign in</button>
+      <p class="switch-auth">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+    </div>
+
+    <div id="forgot-form" class="hidden">
+      <h1>Reset password</h1>
+      <p class="muted">Enter your email and we'll generate a reset link</p>
+      <div id="forgot-error" class="form-error hidden"></div>
+      <div id="forgot-success" class="form-success hidden"></div>
+      <label>Email</label>
+      <input type="email" id="forgot-email" placeholder="name@company.com" />
+      <button class="btn-primary" id="forgot-btn">Send reset link</button>
+      <div id="reset-fields" class="hidden">
+        <label>Reset token</label>
+        <input type="text" id="reset-token" placeholder="Paste the token shown above" />
+        <label>New password</label>
+        <input type="password" id="reset-new-password" placeholder="At least 6 characters" />
+        <button class="btn-primary" id="reset-btn">Set new password</button>
+      </div>
+      <p class="switch-auth"><a href="#" id="back-to-login">Back to sign in</a></p>
+    </div>
+
+    <div id="signup-form" class="hidden">
+      <h1>Create account</h1>
+      <p class="muted">Sign up to start tracking your business with Novams</p>
+      <div id="signup-error" class="form-error hidden"></div>
+      <label>Full name</label>
+      <input type="text" id="signup-name" placeholder="Jane Doe" />
+      <label>Email</label>
+      <input type="email" id="signup-email" placeholder="name@company.com" />
+      <label>Password</label>
+      <input type="password" id="signup-password" placeholder="At least 6 characters" />
+      <button class="btn-primary" id="signup-btn">Sign up</button>
+      <p class="switch-auth">Already have an account? <a href="#" id="show-login">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP SHELL ===== -->
+<div id="app-shell" class="app-shell hidden">
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div>
+        <span>Novams</span>
+        <div class="sidebar-tagline">Quick Commerce Analytics</div>
+      </div>
+      <button class="sidebar-close-btn" id="sidebar-close-btn">✕</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#dashboard" data-page="dashboard" class="nav-item"><span class="icon">▦</span>Dashboard</a>
+      <a href="#sales" data-page="sales" class="nav-item"><span class="icon">📈</span>Sales Analytics</a>
+      <a href="#customers" data-page="customers" class="nav-item"><span class="icon">👥</span>Customer Analytics</a>
+      <a href="#products" data-page="products" class="nav-item"><span class="icon">📦</span>Product Analytics</a>
+      <a href="#inventory" data-page="inventory" class="nav-item"><span class="icon">🏬</span>Inventory Management</a>
+      <a href="#employees" data-page="employees" class="nav-item"><span class="icon">🧑‍💼</span>Employee & Workforce</a>
+      <a href="#ai-insights" data-page="ai-insights" class="nav-item"><span class="icon">💡</span>AI Business Insights</a>
+      <a href="#forecast" data-page="forecast" class="nav-item"><span class="icon">〰</span>Sales Forecasting</a>
+      <a href="#blinkbot" data-page="blinkbot" class="nav-item"><span class="icon">🤖</span>BlinkBot AI</a>
+      <a href="#reports" data-page="reports" class="nav-item"><span class="icon">📄</span>Reports & Export</a>
+      <a href="#data-explorer" data-page="data-explorer" class="nav-item"><span class="icon">🗂</span>Data Explorer</a>
+      <a href="#settings" data-page="settings" class="nav-item"><span class="icon">⚙</span>Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="sidebar-user-name">-</div>
+          <div class="user-email" id="sidebar-user-email">-</div>
+          <div class="role-badge" id="sidebar-role-badge">Owner</div>
+        </div>
+      </div>
+      <button class="logout-btn" id="logout-btn">⎋ Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+      <input type="text" class="search-input" placeholder="Search products, customers... (Ctrl+K)" />
+      <div class="topbar-actions">
+        <label class="upload-btn">
+          ⬆ <span class="label-text">Upload Data</span>
+          <input type="file" id="upload-input" accept=".csv" hidden />
+        </label>
+        <span class="bell">🔔</span>
+      </div>
+    </div>
+    <div id="toast" class="toast hidden"></div>
+
+    <div id="page-content" class="page-content">
+      <!-- Pages are rendered here by app.js -->
+    </div>
+  </main>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

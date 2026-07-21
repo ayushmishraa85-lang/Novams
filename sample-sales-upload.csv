@@ -1,0 +1,7 @@
+date,product,category,quantity,revenue,cost,city,orders,customer_name,customer_email
+2026-01-05,Wireless Earbuds,Electronics,4,320.00,220.00,Mumbai,1,Alice Johnson,alice@example.com
+2026-01-12,Running Shoes,Apparel,2,150.00,95.00,Delhi,1,Bob Smith,bob@example.com
+2026-02-03,Coffee Maker,Home Goods,1,89.99,60.00,Mumbai,1,Carla Diaz,carla@example.com
+2026-02-18,Smart Watch,Electronics,3,540.00,410.00,Bengaluru,1,David Lee,david@example.com
+2026-03-07,Novel Set,Books,5,75.00,50.00,Delhi,1,Alice Johnson,alice@example.com
+2026-03-21,Backpack,Apparel,2,110.00,70.00,Mumbai,1,Bob Smith,bob@example.com
