@@ -1,13 +1,24 @@
 const { Pool } = require('pg');
+const dns = require('dns');
 
-// Railway injects DATABASE_URL automatically once a PostgreSQL plugin is attached.
+// Node 18+ prefers IPv6 (AAAA records) when resolving hostnames. Some hosts
+// (notably Render) advertise an IPv6 address for their Postgres instance that
+// isn't actually reachable from the outbound network, causing ENETUNREACH.
+// Forcing IPv4-first resolution avoids that without needing any special
+// per-provider configuration.
+dns.setDefaultResultOrder('ipv4first');
+
+// Works with any Postgres provider (Railway, Render, Supabase, Neon, etc.) that
+// injects a DATABASE_URL. Most managed Postgres providers require SSL for external
+// connections but use certificates that Node's default strict verification will
+// reject, so we enable SSL with rejectUnauthorized:false for anything that isn't
+// an explicit plain localhost connection.
 const connectionString = process.env.DATABASE_URL;
+const isLocal = connectionString && (connectionString.includes('localhost') || connectionString.includes('127.0.0.1'));
 
 const pool = new Pool({
   connectionString,
-  ssl: connectionString && connectionString.includes('railway')
-    ? { rejectUnauthorized: false }
-    : (process.env.PGSSLMODE === 'require' ? { rejectUnauthorized: false } : false)
+  ssl: (connectionString && !isLocal) ? { rejectUnauthorized: false } : false
 });
 
 // Data-sharing model: every user has an org_owner_id. For an Owner, org_owner_id
